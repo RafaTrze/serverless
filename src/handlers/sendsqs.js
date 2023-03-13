@@ -24,6 +24,12 @@ const sendMessage = async (event) => {
     function: sendMessage.name,
     status: 200
   })
+  
+  console.log('console.log')
+  console.log({
+    message: 'console.log object'
+  })
+  logger.info('logger')
 
   return {
     statusCode: 200,

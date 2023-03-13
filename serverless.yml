@@ -25,3 +25,5 @@ functions:
       - httpApi:
           path: /sqs
           method: post
+    environment: ${file(env.json)}
+
