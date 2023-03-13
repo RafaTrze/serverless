@@ -26,4 +26,10 @@ functions:
           path: /sqs
           method: post
     environment: ${file(env.json)}
+  sqstosnsapi:
+    handler: src/handlers/sqstosns.handler
+    events: 
+      - sqs:
+          arn: arn:aws:sqs:eu-west-2:533322355632:myfirstsqsqueue
+          batchSize: 1
 
