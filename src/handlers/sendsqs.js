@@ -9,7 +9,7 @@ const sendMessage = async (event) => {
   // Create an SQS service object
   const sqs = new AWS.SQS();
 
-  const queueUrl = 'https://sqs.eu-west-2.amazonaws.com/533322355632/myfirstsqsqueue'
+  const queueUrl = process.env.QUEUE_URL
   const params = {
     MessageBody: JSON.stringify(event.body),
     QueueUrl: queueUrl,
