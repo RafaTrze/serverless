@@ -1,6 +1,13 @@
+const logger = require('./src/utils/logger');
+
 const hello = async (event) => {
   
-  console.log('I said hello')
+  logger.info({
+    message: 'I said hello world',
+    path: __dirname,
+    function: hello.name,
+    status: 200
+  })
   
   return {
     statusCode: 200,

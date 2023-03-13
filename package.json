@@ -7,5 +7,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "aws-sdk": "^2.1329.0",
+    "pino": "^8.11.0",
+    "pino-pretty": "^9.4.0"
+  }
 }

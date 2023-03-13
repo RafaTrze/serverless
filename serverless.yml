@@ -5,11 +5,23 @@ provider:
   name: aws
   runtime: nodejs18.x
   region: eu-west-2
-
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - sqs:*
+      Resource:
+        - arn:aws:sqs:eu-west-2:533322355632:myfirstsqsqueue
+        
 functions:
   sayhelloapi:
     handler: src/handlers/hello.handler
     events:
       - httpApi:
-          path: /
+          path: /hello
           method: get
+  sendsqsapi:
+    handler: src/handlers/sendsqs.handler
+    events:
+      - httpApi:
+          path: /sqs
+          method: post
