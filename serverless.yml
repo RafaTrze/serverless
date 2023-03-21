@@ -9,9 +9,9 @@ provider:
     - Effect: Allow
       Action:
         - sqs:*
-      Resource:
-        - arn:aws:sqs:eu-west-2:533322355632:myfirstsqsqueue
-        
+        - sns:*
+      Resource: '*'
+      
 functions:
   sayhelloapi:
     handler: src/handlers/hello.handler

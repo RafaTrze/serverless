@@ -15,32 +15,38 @@ AWS.config.update({region: 'eu-west-2'});
 
 const queueToText = async (event) => {
   console.log('it was called');
-  console.log(event);
+
+  const body = JSON.parse(event.Records[0].body)
+
+  console.log('body:', body)
   
-  const sqs = new AWS.SQS();
+  const sns = new AWS.SNS()
 
-  const queueUrl = process.env.QUEUE_URL;
-  const params = {
-    QueueUrl: queueUrl,
-    VisibilityTimeout: 20,
-    WaitTimeSeconds: 0
-  };
+  // const paramsAttributes = {
+  //   attributes: {
+  //     DefaultSMSType: 'Promotional'
+  //   }
+  // }
+  const paramsMessage = {
+    Message: body.message,
+    PhoneNumber: body.phoneNumber
+  }
+  
+  console.log('paramsMessage:', paramsMessage)
+  
+  
+  // const messageAttributes = await sns.setSMSAttributes(paramsAttributes).promise();
+  const data = await sns.publish(paramsMessage).promise();
+  // await sns.publish(paramsMessage).promise();
 
-  const data = await sqs.receiveMessage(params).promise();
-
-  console.log('data:', data);
-
-  const deleteParams = {
-    QueueUrl: queueUrl,
-    ReceiptHandle: data.Messages[0].ReceiptHandle
-  };
-
-  const removedMessage = await sqs.deleteMessage(deleteParams).promise();
-  console.log('removed message:', removedMessage);
+  // console.log('messageAttributes:', messageAttributes)
+  console.log('data:', data)
 
   return {
     statusCode: 200,
-    body: data[1]
+    body: JSON.stringify({
+      message: 'success',
+    })
   };
 };
 

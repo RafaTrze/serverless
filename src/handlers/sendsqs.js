@@ -1,20 +1,27 @@
 // Load the AWS SDK for Node.js
 const AWS = require('aws-sdk');
+const logger = require('../utils/logger')
 // Set the region 
 AWS.config.update({region: 'eu-west-2'});
 
 
+
 const sendMessage = async (event) => {
-  
-  console.log('event:', event);
-  console.log('event body:', event.body)
+  logger.info('message1')
+  logger.info({
+    event: event,
+    dirname: __dirname
+  }, 
+    'message');
+  // console.log('event:', event);
 
   // Create an SQS service object
   const sqs = new AWS.SQS();
 
+  const body = JSON.parse(event.body);
   const queueUrl = process.env.QUEUE_URL
   const params = {
-    MessageBody: JSON.stringify(event.body),
+    MessageBody: JSON.stringify(body),
     QueueUrl: queueUrl,
     DelaySeconds: 2
   };
